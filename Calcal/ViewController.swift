@@ -161,6 +161,7 @@ class ViewController: UIViewController {
       UIView.transition(with: target, duration: 1, options: .curveEaseInOut, animations: { () -> Void in
          
          // 画面右まで移動
+         //migigawamadeidou
          target.frame.origin.x = self.view.bounds.width
          
       }, completion: { _ in
