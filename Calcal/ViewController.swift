@@ -28,6 +28,9 @@ class ViewController: UIViewController {
    var Fsecond: Bool = false
    var Fthird: Bool = false
    var Ffourth: Bool = false
+   
+   let EqualLabel = UILabel()
+   let AnswerLabel = UILabel()
 
    override func viewDidLoad() {
       super.viewDidLoad()
@@ -38,6 +41,42 @@ class ViewController: UIViewController {
       
       InitArithmeticButton()
       InitNumbreLabel()
+      InitFormation()
+   }
+   
+   func InitFormation() {
+      
+      let Wide = Size.width / 3
+      let Interval = Size.width / 9
+      
+      EqualLabel.frame = CGRect(x: Interval , y: Size.height / 4, width: Wide, height: Wide)
+      EqualLabel.font = UIFont(name: "Helvetica", size: 30)
+      EqualLabel.layer.borderColor = UIColor.black.cgColor
+      EqualLabel.layer.borderWidth = 2
+      EqualLabel.layer.masksToBounds = true
+      EqualLabel.layer.cornerRadius = 10
+      EqualLabel.textAlignment = NSTextAlignment.center
+      EqualLabel.backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
+      EqualLabel.layer.cornerRadius = 10.0
+      EqualLabel.layer.borderColor = UIColor.black.cgColor
+      EqualLabel.isUserInteractionEnabled = true
+      EqualLabel.text = "="
+      view.addSubview(EqualLabel)
+      
+      AnswerLabel.frame = CGRect(x: Interval * 2 + Wide, y: Size.height / 4, width: Wide, height: Wide)
+      AnswerLabel.font = UIFont(name: "Helvetica", size: 30)
+      AnswerLabel.layer.borderColor = UIColor.black.cgColor
+      AnswerLabel.layer.borderWidth = 2
+      AnswerLabel.layer.masksToBounds = true
+      AnswerLabel.layer.cornerRadius = 10
+      AnswerLabel.textAlignment = NSTextAlignment.center
+      AnswerLabel.backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
+      AnswerLabel.layer.cornerRadius = 10.0
+      AnswerLabel.layer.borderColor = UIColor.black.cgColor
+      AnswerLabel.isUserInteractionEnabled = true
+      AnswerLabel.text = "23"
+      view.addSubview(AnswerLabel)
+      
    }
    
    func InitEarchNumberLabel(_ SetLabel: UILabel, _ Num: Int) {
@@ -186,7 +225,7 @@ class ViewController: UIViewController {
             AnimateLabel(Target: ThirdLabel)
          case ForthLabel:
             print("forth")
-            AnimateLabel(Target: ThirdLabel)
+            AnimateLabel(Target: ForthLabel)
          default:
             print("false")
             break
