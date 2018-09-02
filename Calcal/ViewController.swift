@@ -32,6 +32,9 @@ class ViewController: UIViewController {
    let EqualLabel = UILabel()
    let AnswerLabel = UILabel()
    let QuestionLabel = UILabel()
+   var ExitQuestion: Bool = true
+   
+   var LabelArray: [String] = []
 
    override func viewDidLoad() {
       super.viewDidLoad()
@@ -43,6 +46,9 @@ class ViewController: UIViewController {
       InitArithmeticButton()
       InitNumbreLabel()
       InitFormation()
+      
+      LabelArray = ["?", "=", AnswerLabel.text] as! [String]
+      
    }
    
    func InitFormation() {
@@ -207,17 +213,35 @@ class ViewController: UIViewController {
       return true
    }
    
-   func AnimateLabel(Target:UIView){
+   func FormationUpLabel(Target:UILabel){
 
+      if ExitQuestion == true {
+         LabelArray.removeFirst()
+         LabelArray.insert(Target.text!, at: 0)
+         ExitQuestion = false
+         QuestionLabel.removeFromSuperview()
+      }else{
+         let SerchEqurl = LabelArray.index(of: "=")
+         let FrontOfEqurl = SerchEqurl!
+         LabelArray.insert(Target.text!, at: FrontOfEqurl)
+         print(LabelArray)
+      }
+      
+      let ArrayCount = CGFloat(LabelArray.count + 1)
+      let Wide = Size.width / ArrayCount
+      let Interval = Size.width / (ArrayCount * ArrayCount)
+      
+      
       
       UIView.transition(with: Target, duration: 1, options: .curveEaseInOut, animations: { () -> Void in
 
-         //Target.frame.origin.x = self.view.bounds.width
-         Target.frame = CGRect(x: 10, y: 10, width: 100, height: 100)
+         Target.frame = CGRect(x: Interval, y: self.Size.height / 4, width: Wide, height: Wide)
+         self.EqualLabel.frame = CGRect(x: Interval * 2 + Wide, y: self.Size.height / 4, width: Wide, height: Wide)
+         self.AnswerLabel.frame = CGRect(x: Interval * 3 + Wide * 2, y: self.Size.height / 4, width: Wide, height: Wide)
          
          
       }, completion: { _ in
-         self.AnimateLabel(Target: Target)
+         //çself.FormationUpLabel(Target: Target)
       })
    }
    
@@ -230,17 +254,17 @@ class ViewController: UIViewController {
          switch touched.view {
          case FirstLabel:
             print("first")
-            AnimateLabel(Target: FirstLabel)
+            FormationUpLabel(Target: FirstLabel)
             print("first")
          case SecondLabel:
             print("second")
-            AnimateLabel(Target: SecondLabel)
+            FormationUpLabel(Target: SecondLabel)
          case ThirdLabel:
             print("third")
-            AnimateLabel(Target: ThirdLabel)
+            FormationUpLabel(Target: ThirdLabel)
          case ForthLabel:
             print("forth")
-            AnimateLabel(Target: ForthLabel)
+            FormationUpLabel(Target: ForthLabel)
          default:
             print("false")
             break
