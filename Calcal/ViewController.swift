@@ -35,6 +35,8 @@ class ViewController: UIViewController {
    var ExitQuestion: Bool = true
    
    var LabelArray: [String] = []
+   
+   var TestArray: [UILabel] = []
 
    override func viewDidLoad() {
       super.viewDidLoad()
@@ -213,18 +215,32 @@ class ViewController: UIViewController {
       return true
    }
    
+   func FrontFormation(Count:Int) {
+      
+      for Tmp in 1 ... Count {
+         print("test")
+      }
+      
+   }
+   
    func FormationUpLabel(Target:UILabel){
 
       if ExitQuestion == true {
          LabelArray.removeFirst()
          LabelArray.insert(Target.text!, at: 0)
+         TestArray.append(Target)
          ExitQuestion = false
-         QuestionLabel.removeFromSuperview()
+         UILabel.transition(with: Target, duration: 1, options: .curveEaseInOut, animations: { () -> Void in
+            self.QuestionLabel.isHidden = true
+         }, completion: {_ in})
       }else{
          let SerchEqurl = LabelArray.index(of: "=")
          let FrontOfEqurl = SerchEqurl!
          LabelArray.insert(Target.text!, at: FrontOfEqurl)
+         TestArray.append(Target)
          print(LabelArray)
+         //print(TestArray)
+         FrontFormation(Count: FrontOfEqurl)
       }
       
       let ArrayCount = CGFloat(LabelArray.count + 1)
