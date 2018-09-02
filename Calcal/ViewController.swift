@@ -231,17 +231,20 @@ class ViewController: UIViewController {
       let Wide = Size.width / ArrayCount
       let Interval = Size.width / (ArrayCount * ArrayCount)
       
+      let Count = CGFloat(LabelArray.count)
       
       
-      UIView.transition(with: Target, duration: 1, options: .curveEaseInOut, animations: { () -> Void in
+      
+      UILabel.transition(with: Target, duration: 1, options: .curveEaseInOut, animations: { () -> Void in
 
-         Target.frame = CGRect(x: Interval, y: self.Size.height / 4, width: Wide, height: Wide)
-         self.EqualLabel.frame = CGRect(x: Interval * 2 + Wide, y: self.Size.height / 4, width: Wide, height: Wide)
-         self.AnswerLabel.frame = CGRect(x: Interval * 3 + Wide * 2, y: self.Size.height / 4, width: Wide, height: Wide)
+         Target.frame = CGRect(x: Interval * (Count - 2) + Wide * (Count - 3), y: self.Size.height / 4, width: Wide, height: Wide)
+         self.EqualLabel.frame = CGRect(x: Interval * (Count - 1) + Wide * (Count - 2), y: self.Size.height / 4, width: Wide, height: Wide)
+         self.AnswerLabel.frame = CGRect(x: Interval * Count + Wide * (Count - 1), y: self.Size.height / 4, width: Wide, height: Wide)
          
          
       }, completion: { _ in
-         //çself.FormationUpLabel(Target: Target)
+         //ここを入れると。無限ループする。
+         //self.FormationUpLabel(Target: Target)
       })
    }
    
@@ -255,16 +258,20 @@ class ViewController: UIViewController {
          case FirstLabel:
             print("first")
             FormationUpLabel(Target: FirstLabel)
+            Ffirst = true
             print("first")
          case SecondLabel:
             print("second")
             FormationUpLabel(Target: SecondLabel)
+            Fsecond = true
          case ThirdLabel:
             print("third")
             FormationUpLabel(Target: ThirdLabel)
+            Fthird = true
          case ForthLabel:
             print("forth")
             FormationUpLabel(Target: ForthLabel)
+            Ffourth = true
          default:
             print("false")
             break
