@@ -31,6 +31,7 @@ class ViewController: UIViewController {
    
    let EqualLabel = UILabel()
    let AnswerLabel = UILabel()
+   let QuestionLabel = UILabel()
 
    override func viewDidLoad() {
       super.viewDidLoad()
@@ -46,10 +47,24 @@ class ViewController: UIViewController {
    
    func InitFormation() {
       
-      let Wide = Size.width / 3
-      let Interval = Size.width / 9
+      let Wide = Size.width / 4
+      let Interval = Size.width / 16
       
-      EqualLabel.frame = CGRect(x: Interval , y: Size.height / 4, width: Wide, height: Wide)
+      QuestionLabel.frame = CGRect(x: Interval , y: Size.height / 4, width: Wide, height: Wide)
+      QuestionLabel.font = UIFont(name: "Helvetica", size: 30)
+      QuestionLabel.layer.borderColor = UIColor.black.cgColor
+      QuestionLabel.layer.borderWidth = 2
+      QuestionLabel.layer.masksToBounds = true
+      QuestionLabel.layer.cornerRadius = 10
+      QuestionLabel.textAlignment = NSTextAlignment.center
+      QuestionLabel.backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
+      QuestionLabel.layer.cornerRadius = 10.0
+      QuestionLabel.layer.borderColor = UIColor.black.cgColor
+      QuestionLabel.isUserInteractionEnabled = true
+      QuestionLabel.text = "?"
+      view.addSubview(QuestionLabel)
+      
+      EqualLabel.frame = CGRect(x: Interval * 2 + Wide, y: Size.height / 4, width: Wide, height: Wide)
       EqualLabel.font = UIFont(name: "Helvetica", size: 30)
       EqualLabel.layer.borderColor = UIColor.black.cgColor
       EqualLabel.layer.borderWidth = 2
@@ -63,7 +78,7 @@ class ViewController: UIViewController {
       EqualLabel.text = "="
       view.addSubview(EqualLabel)
       
-      AnswerLabel.frame = CGRect(x: Interval * 2 + Wide, y: Size.height / 4, width: Wide, height: Wide)
+      AnswerLabel.frame = CGRect(x: Interval * 3 + Wide * 2, y: Size.height / 4, width: Wide, height: Wide)
       AnswerLabel.font = UIFont(name: "Helvetica", size: 30)
       AnswerLabel.layer.borderColor = UIColor.black.cgColor
       AnswerLabel.layer.borderWidth = 2
@@ -76,6 +91,8 @@ class ViewController: UIViewController {
       AnswerLabel.isUserInteractionEnabled = true
       AnswerLabel.text = "23"
       view.addSubview(AnswerLabel)
+      
+      
       
    }
    
@@ -187,9 +204,7 @@ class ViewController: UIViewController {
 
    
    func MoveAdd(flag: Bool, MoveButton: UIButton) -> Bool{
-      
       return true
-      
    }
    
    func AnimateLabel(Target:UIView){
