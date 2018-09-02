@@ -217,8 +217,21 @@ class ViewController: UIViewController {
    
    func FrontFormation(Count:Int) {
       
-      for Tmp in 1 ... Count {
-         print("test")
+      var ArrayCount = CGFloat(LabelArray.count + 1)
+      let Wide = Size.width / ArrayCount
+      let Interval = Size.width / (ArrayCount * ArrayCount)
+      ArrayCount = CGFloat(LabelArray.count)
+      
+      for Tmp in 0 ... (Count - 1) {
+         UILabel.transition(with: TestArray[Tmp], duration: 1, options: .curveEaseInOut, animations: { () -> Void in
+            
+            self.TestArray[Tmp].frame = CGRect(x: Interval * CGFloat(Tmp + 1) + Wide * CGFloat(Tmp), y: self.Size.height / 4, width: Wide, height: Wide)
+            //self.EqualLabel.frame = CGRect(x: Interval * (Count - 1) + Wide * (Count - 2), y: self.Size.height / 4, width: Wide, height: Wide)
+            //self.AnswerLabel.frame = CGRect(x: Interval * Count + Wide * (Count - 1), y: self.Size.height / 4, width: Wide, height: Wide)
+         }, completion: { _ in
+            //ここを入れると。無限ループする。
+            //self.FormationUpLabel(Target: Target)
+         })
       }
       
    }
@@ -272,24 +285,26 @@ class ViewController: UIViewController {
          
          switch touched.view {
          case FirstLabel:
-            print("first")
-            FormationUpLabel(Target: FirstLabel)
+            if Ffirst == false {
+               FormationUpLabel(Target: FirstLabel)
+            }
             Ffirst = true
-            print("first")
          case SecondLabel:
-            print("second")
-            FormationUpLabel(Target: SecondLabel)
+            if Fsecond == false {
+               FormationUpLabel(Target: SecondLabel)
+            }
             Fsecond = true
          case ThirdLabel:
-            print("third")
-            FormationUpLabel(Target: ThirdLabel)
+            if Fthird == false {
+               FormationUpLabel(Target: ThirdLabel)
+            }
             Fthird = true
          case ForthLabel:
-            print("forth")
-            FormationUpLabel(Target: ForthLabel)
+            if Ffourth == false {
+               FormationUpLabel(Target: ForthLabel)
+            }
             Ffourth = true
          default:
-            print("false")
             break
          }
       }
