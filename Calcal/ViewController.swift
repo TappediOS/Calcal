@@ -154,8 +154,7 @@ class ViewController: UIViewController {
    }
    
    func AnimateLabel(target:UIView){
-//      let timePerSecond = 4 / view.bounds.size.width
-//      let remainTime = (view.bounds.size.width - target.frame.origin.x) * timePerSecond
+
       
       // アニメーション
       UIView.transition(with: target, duration: 1, options: .curveEaseInOut, animations: { () -> Void in
