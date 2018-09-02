@@ -153,18 +153,17 @@ class ViewController: UIViewController {
       
    }
    
-   func AnimateLabel(target:UIView){
+   func AnimateLabel(Target:UIView){
 
       
-      // アニメーション
-      UIView.transition(with: target, duration: 1, options: .curveEaseInOut, animations: { () -> Void in
+      UIView.transition(with: Target, duration: 1, options: .curveEaseInOut, animations: { () -> Void in
+
+         //Target.frame.origin.x = self.view.bounds.width
+         Target.frame = CGRect(x: 10, y: 10, width: 100, height: 100)
          
-         // 画面右まで移動
-         //migigawamadeidou
-         target.frame.origin.x = self.view.bounds.width
          
       }, completion: { _ in
-         self.AnimateLabel(target: target)
+         self.AnimateLabel(Target: Target)
       })
    }
    
@@ -177,14 +176,17 @@ class ViewController: UIViewController {
          switch touched.view {
          case FirstLabel:
             print("first")
-            AnimateLabel(target: FirstLabel)
+            AnimateLabel(Target: FirstLabel)
             print("first")
          case SecondLabel:
             print("second")
+            AnimateLabel(Target: SecondLabel)
          case ThirdLabel:
             print("third")
+            AnimateLabel(Target: ThirdLabel)
          case ForthLabel:
             print("forth")
+            AnimateLabel(Target: ThirdLabel)
          default:
             print("false")
             break
