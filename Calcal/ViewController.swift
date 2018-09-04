@@ -323,7 +323,11 @@ class ViewController: UIViewController {
       if LabelArray[0] == "=" {
          ExitQuestion = true
          LabelArray.insert("?", at: 0)
-         QuestionLabel.isHidden = false
+         UILabel.transition(with: Target, duration: 1, options: .curveEaseInOut, animations: { () -> Void in
+            self.QuestionLabel.frame = CGRect(x: self.Size.width / 16 , y: self.Size.height / 4, width: self.Size.width / 4, height: self.Size.width / 4)
+ç            //self.QuestionLabel.isHidden = false
+         }, completion: {_ in})
+         
       }
       
       
@@ -338,8 +342,10 @@ class ViewController: UIViewController {
          TestArray.append(Target)
          ExitQuestion = false
          UILabel.transition(with: Target, duration: 1, options: .curveEaseInOut, animations: { () -> Void in
-            self.QuestionLabel.isHidden = true
+            self.QuestionLabel.frame = CGRect(x: self.Size.width * 3 / 16 , y: self.Size.height / 4 + self.Size.width / 8, width: 0.3, height: 0.3)
+            //self.QuestionLabel.isHidden = true
          }, completion: {_ in})
+
       }else{
          let SerchEqurl = LabelArray.index(of: "=")
          let FrontOfEqurl = SerchEqurl!
