@@ -227,6 +227,8 @@ class ViewController: UIViewController {
       return true
    }
    
+   
+   
    func FrontFormation(Count:Int) {
       
       var ArrayCount = CGFloat(LabelArray.count + 1)
@@ -246,6 +248,22 @@ class ViewController: UIViewController {
       
    }
    
+   func ReSetBool(Num: Int){
+      
+      switch Num {
+      case 1:
+         Ffirst = false
+      case 2:
+         Fsecond = false
+      case 3:
+         Fthird = false
+      case 4:
+         Ffourth = false
+      default:
+         print("Num is not 1 ... 4")
+      }
+   }
+   
    @objc func FormationOneBackLabel() {
       
       if ExitQuestion == true {
@@ -259,6 +277,8 @@ class ViewController: UIViewController {
       let Count = CGFloat(TestArray[FrontOfEqurl].tag)
       let Wide = Size.width / 5
       let Interval = Size.width / 25
+      
+      ReSetBool(Num: TestArray[FrontOfEqurl].tag)
       
       TestArray.remove(at: FrontOfEqurl)
       LabelArray.remove(at: FrontOfEqurl)
