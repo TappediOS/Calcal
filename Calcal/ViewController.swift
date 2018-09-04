@@ -227,7 +227,33 @@ class ViewController: UIViewController {
       return true
    }
    
-   
+   func BackFormation() {
+      
+      let ArrayCount = CGFloat(LabelArray.count + 1)
+      
+      if ArrayCount == 3 {
+         return
+      }
+      
+      let Wide = Size.width / ArrayCount
+      let Interval = Size.width / (ArrayCount * ArrayCount)
+      
+      
+      
+      UILabel.transition(with: EqualLabel, duration: 1, options: .curveEaseInOut, animations: { () -> Void in
+         
+         //Target.frame = CGRect(x: Interval * (Count - 2) + Wide * (Count - 3), y: self.Size.height / 4, width: Wide, height: Wide)
+         self.EqualLabel.frame = CGRect(x: Interval * (ArrayCount - 2) + Wide * (ArrayCount - 3), y: self.Size.height / 4, width: Wide, height: Wide)
+         self.AnswerLabel.frame = CGRect(x: Interval * (ArrayCount - 1) + Wide * (ArrayCount - 2), y: self.Size.height / 4, width: Wide, height: Wide)
+         
+         
+      }, completion: { _ in
+         //ここを入れると。無限ループする。
+         //self.FormationUpLabel(Target: Target)
+      })
+      
+      
+   }
    
    func FrontFormation(Count:Int) {
       
@@ -288,6 +314,8 @@ class ViewController: UIViewController {
       }, completion: { _ in
          //self.FormationUpLabel(Target: Target)
       })
+      
+      BackFormation()
       
       if LabelArray[0] == "=" {
          ExitQuestion = true
