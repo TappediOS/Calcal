@@ -15,6 +15,10 @@ class ViewController: UIViewController {
    let Sub = UIButton()
    let Mul = UIButton()
    let Div = UIButton()
+   let AddLabel = UILabel()
+   let SubLabel = UILabel()
+   let MulLabel = UILabel()
+   let DivLabel = UILabel()
    var Fadd: Bool = false
    var Fsub: Bool = false
    var Fmul: Bool = false
@@ -155,7 +159,7 @@ class ViewController: UIViewController {
       InitEarchNumberLabel(ForthLabel, 4)
    }
    
-   func InitEarchButton(_ SetButton: UIButton, _ Num: Int){
+   func InitEarchButton(_ SetButton: UIButton, _ SetLabel: UILabel, _ Num: Int){
       
       let Wide = Size.width / 5
       let Interval = Size.width / 25
@@ -163,7 +167,14 @@ class ViewController: UIViewController {
       SetButton.frame = CGRect(x: Interval * CGFloat(Num) + Wide * CGFloat(Num - 1), y: Size.height * 3 / 4, width: Wide, height: Wide)
       SetButton.backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
       SetButton.setTitle("+", for: .normal)
+      SetButton.titleLabel?.font = UIFont(name: "Helvetica", size: 30)!
+
       SetButton.setTitleColor(UIColor.black, for: .normal)
+      SetButton.layer.borderColor = UIColor.black.cgColor
+      SetButton.layer.borderWidth = 2
+      SetButton.layer.masksToBounds = true
+      SetButton.layer.cornerRadius = 10
+      //SetButton.textAlignment = NSTextAlignment.center
       SetButton.layer.cornerRadius = 10.0
       SetButton.layer.borderColor = UIColor.black.cgColor
       switch Num {
@@ -184,21 +195,60 @@ class ViewController: UIViewController {
       }
       view.addSubview(SetButton)
       
+      SetLabel.frame = CGRect(x: Interval * CGFloat(Num) + Wide * CGFloat(Num - 1), y: Size.height * 3 / 4, width: Wide, height: Wide)
+      SetLabel.font = UIFont(name: "Helvetica", size: 30)
+      SetLabel.layer.borderColor = UIColor.black.cgColor
+      SetLabel.layer.borderWidth = 2
+      SetLabel.layer.masksToBounds = true
+      SetLabel.layer.cornerRadius = 10
+      SetLabel.textAlignment = NSTextAlignment.center
+      SetLabel.backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
+      SetLabel.layer.cornerRadius = 10.0
+      SetLabel.layer.borderColor = UIColor.black.cgColor
+      SetLabel.isUserInteractionEnabled = true
+      SetLabel.tag = Num
+      switch Num {
+      case 1:
+         SetLabel.text = "+"
+      case 2:
+         SetLabel.text = "-"
+      case 3:
+         SetLabel.text = "*"
+      case 4:
+         SetLabel.text = "/"
+      default:
+         print("error")
+      }
+      SetLabel.isHidden = true
+      view.addSubview(SetLabel)
+      
    }
    
    func InitArithmeticButton() {
-      InitEarchButton(Add, 1)
-      InitEarchButton(Sub, 2)
-      InitEarchButton(Mul, 3)
-      InitEarchButton(Div, 4)
+      InitEarchButton(Add, AddLabel, 1)
+      InitEarchButton(Sub, SubLabel, 2)
+      InitEarchButton(Mul, MulLabel, 3)
+      InitEarchButton(Div, DivLabel, 4)
+   }
+   
+   func MoveCal(_ TargetLabel: UILabel) {
+      
+      if ExitQuestion == true {return}
+      if TestArray.count % 2 == 1 {
+         TargetLabel.isHidden = false
+         FormationUpLabel(Target: TargetLabel)
+      }
+      
    }
    
    @objc func TapAdd() {
       Fadd = MoveAdd(flag: Fadd, MoveButton: Add)
       Add.backgroundColor = UIColor.cyan
-      DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+      DispatchQueue.main.asyncAfter(deadline: .now() + 0.13) {
          self.Add.backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
       }
+      
+     MoveCal(AddLabel)
    }
    @objc func TapSub() {
       Fsub = MoveAdd(flag: Fsub, MoveButton: Sub)
@@ -206,6 +256,7 @@ class ViewController: UIViewController {
       DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
          self.Sub.backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
       }
+      MoveCal(SubLabel)
    }
    @objc func TapMul() {
       Fmul = MoveAdd(flag: Fmul, MoveButton: Mul)
@@ -213,6 +264,7 @@ class ViewController: UIViewController {
       DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
          self.Mul.backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
       }
+      MoveCal(MulLabel)
    }
    @objc func TapDiv() {
       Fdiv = MoveAdd(flag: Fdiv, MoveButton: Div)
@@ -220,6 +272,7 @@ class ViewController: UIViewController {
       DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
          self.Div.backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
       }
+      MoveCal(DivLabel)
    }
 
    
@@ -325,7 +378,7 @@ class ViewController: UIViewController {
          LabelArray.insert("?", at: 0)
          UILabel.transition(with: Target, duration: 1, options: .curveEaseInOut, animations: { () -> Void in
             self.QuestionLabel.frame = CGRect(x: self.Size.width / 16 , y: self.Size.height / 4, width: self.Size.width / 4, height: self.Size.width / 4)
-            //self.QuestionLabel.isHidden = false
+   //self.QuestionLabel.isHidden = false
          }, completion: {_ in})
          
       }
@@ -334,7 +387,7 @@ class ViewController: UIViewController {
       
    }
    
-   func FormationUpLabel(Target:UILabel){
+   func FormationUpLabel(Target:UILabel) {
 
       if ExitQuestion == true {
          LabelArray.removeFirst()
