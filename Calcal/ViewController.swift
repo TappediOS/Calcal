@@ -269,8 +269,10 @@ class ViewController: UIViewController {
          //self.FormationUpLabel(Target: Target)
       })
       
-      if LabelArray[0] == "+" {
+      if LabelArray[0] == "=" {
          ExitQuestion = true
+         LabelArray.insert("?", at: 0)
+         QuestionLabel.isHidden = false
       }
       
       
