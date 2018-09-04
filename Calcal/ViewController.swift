@@ -29,6 +29,8 @@ class ViewController: UIViewController {
    var Fthird: Bool = false
    var Ffourth: Bool = false
    
+   let BackButton = UIButton()
+   
    let EqualLabel = UILabel()
    let AnswerLabel = UILabel()
    let QuestionLabel = UILabel()
@@ -100,6 +102,15 @@ class ViewController: UIViewController {
       AnswerLabel.text = "23"
       view.addSubview(AnswerLabel)
       
+      BackButton.frame = CGRect(x: Interval, y: Size.height * 3.5 / 4, width: Wide, height: Wide)
+      BackButton.backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
+      BackButton.setTitleColor(UIColor.black, for: .normal)
+      BackButton.layer.cornerRadius = 10.0
+      BackButton.layer.borderColor = UIColor.black.cgColor
+      BackButton.setTitle("<-", for: .normal)
+      BackButton.addTarget(self, action: #selector(ViewController.FormationOneBackLabel), for: .touchUpInside)
+      view.addSubview(BackButton)
+
       
       
    }
@@ -120,6 +131,7 @@ class ViewController: UIViewController {
       SetLabel.layer.cornerRadius = 10.0
       SetLabel.layer.borderColor = UIColor.black.cgColor
       SetLabel.isUserInteractionEnabled = true
+      SetLabel.tag = Num
       switch Num {
       case 1:
          SetLabel.text = "43"
@@ -226,13 +238,42 @@ class ViewController: UIViewController {
          UILabel.transition(with: TestArray[Tmp], duration: 1, options: .curveEaseInOut, animations: { () -> Void in
             
             self.TestArray[Tmp].frame = CGRect(x: Interval * CGFloat(Tmp + 1) + Wide * CGFloat(Tmp), y: self.Size.height / 4, width: Wide, height: Wide)
-            //self.EqualLabel.frame = CGRect(x: Interval * (Count - 1) + Wide * (Count - 2), y: self.Size.height / 4, width: Wide, height: Wide)
-            //self.AnswerLabel.frame = CGRect(x: Interval * Count + Wide * (Count - 1), y: self.Size.height / 4, width: Wide, height: Wide)
          }, completion: { _ in
             //ここを入れると。無限ループする。
             //self.FormationUpLabel(Target: Target)
          })
       }
+      
+   }
+   
+   @objc func FormationOneBackLabel() {
+      
+      if ExitQuestion == true {
+         return
+      }
+      
+      let SerchEqurl = LabelArray.index(of: "=")
+      let FrontOfEqurl = SerchEqurl! - 1
+      
+      let Target: UILabel = TestArray[FrontOfEqurl]
+      let Count = CGFloat(TestArray[FrontOfEqurl].tag)
+      let Wide = Size.width / 5
+      let Interval = Size.width / 25
+      
+      TestArray.remove(at: FrontOfEqurl)
+      LabelArray.remove(at: FrontOfEqurl)
+      
+      UILabel.transition(with: Target, duration: 1, options: .curveEaseInOut, animations: { () -> Void in
+         Target.frame = CGRect(x: Interval * Count + Wide * (Count - 1), y: self.Size.height * 2 / 4, width: Wide, height: Wide)
+      }, completion: { _ in
+         //self.FormationUpLabel(Target: Target)
+      })
+      
+      if LabelArray[0] == "+" {
+         ExitQuestion = true
+      }
+      
+      
       
    }
    
@@ -252,7 +293,6 @@ class ViewController: UIViewController {
          LabelArray.insert(Target.text!, at: FrontOfEqurl)
          TestArray.append(Target)
          print(LabelArray)
-         //print(TestArray)
          FrontFormation(Count: FrontOfEqurl)
       }
       
