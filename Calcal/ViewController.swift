@@ -316,7 +316,10 @@ class ViewController: UIViewController {
       })
       
       BackFormation()
-      
+      if FrontOfEqurl != 0{
+         FrontFormation(Count: FrontOfEqurl)
+      }
+         
       if LabelArray[0] == "=" {
          ExitQuestion = true
          LabelArray.insert("?", at: 0)
