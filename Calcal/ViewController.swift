@@ -19,10 +19,20 @@ class ViewController: UIViewController {
    let SubLabel = UILabel()
    let MulLabel = UILabel()
    let DivLabel = UILabel()
-   var Fadd: Bool = false
-   var Fsub: Bool = false
-   var Fmul: Bool = false
-   var Fdiv: Bool = false
+   var AddCount = 0
+   var SubCount = 0
+   var MulCount = 0
+   var DivCount = 0
+   
+   var AddLabel2 = UILabel()
+   var AddLabel3 = UILabel()
+   var SubLabel2 = UILabel()
+   var SubLabel3 = UILabel()
+   var MulLabel2 = UILabel()
+   var MulLabel3 = UILabel()
+   var DivLabel2 = UILabel()
+   var DivLabel3 = UILabel()
+   
    
    let FirstLabel = UILabel()
    let SecondLabel = UILabel()
@@ -54,11 +64,22 @@ class ViewController: UIViewController {
       InitArithmeticButton()
       InitNumbreLabel()
       InitFormation()
-      
       LabelArray = ["?", "=", AnswerLabel.text] as! [String]
       
    }
    
+   func InitCloneLabel() {
+      AddLabel2 = AddLabel
+      AddLabel3 = AddLabel
+      SubLabel2 = SubLabel
+      SubLabel3 = SubLabel
+      MulLabel2 = MulLabel
+      MulLabel3 = MulLabel
+      DivLabel2 = DivLabel
+      DivLabel3 = DivLabel
+      view.addSubview(AddLabel2)
+   }
+      
    func InitFormation() {
       
       let Wide = Size.width / 4
@@ -160,7 +181,7 @@ class ViewController: UIViewController {
       InitEarchNumberLabel(ForthLabel, 4)
    }
    
-   func InitEarchButton(_ SetButton: UIButton, _ SetLabel: UILabel, _ Num: Int){
+   func InitEarchButton(_ SetButton: UIButton, _ Num: Int){
       
       let Wide = Size.width / 5
       let Interval = Size.width / 25
@@ -196,6 +217,15 @@ class ViewController: UIViewController {
       }
       view.addSubview(SetButton)
       
+      
+      
+   }
+   
+   func InitEarchLabel(_ SetLabel: UILabel, _ Num: Int) {
+   
+      let Wide = Size.width / 5
+      let Interval = Size.width / 25
+      
       SetLabel.frame = CGRect(x: Interval * CGFloat(Num) + Wide * CGFloat(Num - 1), y: Size.height * 3 / 4, width: Wide, height: Wide)
       SetLabel.font = UIFont(name: "Helvetica", size: 30)
       SetLabel.layer.borderColor = UIColor.black.cgColor
@@ -210,77 +240,137 @@ class ViewController: UIViewController {
       SetLabel.tag = (Num + 10)
       switch Num {
       case 1:
-         SetLabel.text = "+"
+      SetLabel.text = "+"
       case 2:
-         SetLabel.text = "-"
+      SetLabel.text = "-"
       case 3:
-         SetLabel.text = "*"
+      SetLabel.text = "*"
       case 4:
-         SetLabel.text = "/"
+      SetLabel.text = "/"
       default:
-         print("error")
+      print("error")
       }
       SetLabel.isHidden = true
       view.addSubview(SetLabel)
-      
    }
    
    func InitArithmeticButton() {
-      InitEarchButton(Add, AddLabel, 1)
-      InitEarchButton(Sub, SubLabel, 2)
-      InitEarchButton(Mul, MulLabel, 3)
-      InitEarchButton(Div, DivLabel, 4)
+      InitEarchButton(Add, 1)
+      InitEarchButton(Sub, 2)
+      InitEarchButton(Mul, 3)
+      InitEarchButton(Div, 4)
+      InitEarchLabel(AddLabel, 1)
+      InitEarchLabel(AddLabel2, 1)
+      InitEarchLabel(AddLabel3, 1)
+      InitEarchLabel(SubLabel, 2)
+      InitEarchLabel(SubLabel2, 2)
+      InitEarchLabel(SubLabel3, 2)
+      InitEarchLabel(MulLabel, 3)
+      InitEarchLabel(MulLabel2, 3)
+      InitEarchLabel(MulLabel3, 3)
+      InitEarchLabel(DivLabel, 4)
+      InitEarchLabel(DivLabel2, 4)
+      InitEarchLabel(DivLabel3, 4)
+      
    }
    
    func MoveCal(_ TargetLabel: UILabel) {
       
-      if ExitQuestion == true {return}
-      if TestArray.count % 2 == 1 {
-         TargetLabel.isHidden = false
-         FormationUpLabel(Target: TargetLabel)
-      }
+      TargetLabel.isHidden = false
+      FormationUpLabel(Target: TargetLabel)
       
    }
    
+   func CheckCanMove() -> Bool {
+      if ExitQuestion == true || TestArray.count % 2 == 0 {
+         return false
+      }else{
+         return true
+      }
+   }
+   
    @objc func TapAdd() {
-      Fadd = MoveAdd(flag: Fadd, MoveButton: Add)
+      if CheckCanMove() == false {
+         return
+      }
+      AddCount += 1
       Add.backgroundColor = UIColor.cyan
       DispatchQueue.main.asyncAfter(deadline: .now() + 0.13) {
          self.Add.backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
       }
       
-     MoveCal(AddLabel)
+      switch AddCount {
+      case 1:
+         MoveCal(AddLabel)
+      case 2:
+         MoveCal(AddLabel2)
+      case 3:
+         MoveCal(AddLabel3)
+      default:
+         break
+      }
    }
    @objc func TapSub() {
-      Fsub = MoveAdd(flag: Fsub, MoveButton: Sub)
+      if CheckCanMove() == false {
+         return
+      }
+      SubCount += 1
       Sub.backgroundColor = UIColor.cyan
       DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
          self.Sub.backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
       }
-      MoveCal(SubLabel)
+      switch SubCount {
+      case 1:
+         MoveCal(SubLabel)
+      case 2:
+         MoveCal(SubLabel2)
+      case 3:
+         MoveCal(SubLabel3)
+      default:
+         break
+      }
    }
    @objc func TapMul() {
-      Fmul = MoveAdd(flag: Fmul, MoveButton: Mul)
+      if CheckCanMove() == false {
+         return
+      }
+      MulCount += 1
       Mul.backgroundColor = UIColor.cyan
       DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
          self.Mul.backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
       }
-      MoveCal(MulLabel)
+      switch MulCount {
+      case 1:
+         MoveCal(MulLabel)
+      case 2:
+         MoveCal(MulLabel2)
+      case 3:
+         MoveCal(MulLabel3)
+      default:
+         break
+      }
    }
    @objc func TapDiv() {
-      Fdiv = MoveAdd(flag: Fdiv, MoveButton: Div)
+      if CheckCanMove() == false {
+         return
+      }
+      DivCount += 1
       Div.backgroundColor = UIColor.cyan
       DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
          self.Div.backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
       }
-      MoveCal(DivLabel)
+      switch DivCount {
+      case 1:
+         MoveCal(DivLabel)
+      case 2:
+         MoveCal(DivLabel2)
+      case 3:
+         MoveCal(DivLabel3)
+      default:
+         break
+      }
    }
 
-   
-   func MoveAdd(flag: Bool, MoveButton: UIButton) -> Bool{
-      return true
-   }
-   
    func BackFormation() {
       
       let ArrayCount = CGFloat(LabelArray.count + 1)
@@ -344,6 +434,24 @@ class ViewController: UIViewController {
       }
    }
    
+   func ReFormCalCount(_ Check: String) {
+      
+      switch Check {
+      case "+":
+         AddCount -= 1
+      case "-":
+         SubCount -= 1
+      case "*":
+         MulCount -= 1
+      case "/":
+         DivCount -= 1
+      default:
+         print("error")
+         break
+      }
+   }
+   
+   
    func NumbreOrCla(_ Num: Int) -> Bool {
       
       if Num < 10 {
@@ -380,6 +488,8 @@ class ViewController: UIViewController {
          }, completion: { _ in
             //self.FormationUpLabel(Target: Target)
          })
+         
+         ReFormCalCount(LabelArray[FrontOfEqurl])
       }else{
          UILabel.transition(with: Target, duration: 1, options: .curveEaseInOut, animations: { () -> Void in
             Target.frame = CGRect(x: Interval * Count + Wide * (Count - 1), y: self.Size.height * 2 / 4, width: Wide, height: Wide)
@@ -406,6 +516,7 @@ class ViewController: UIViewController {
          
       }
       
+      print(LabelArray)
       
       
    }
