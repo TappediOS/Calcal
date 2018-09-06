@@ -68,18 +68,6 @@ class ViewController: UIViewController {
       
    }
    
-   func InitCloneLabel() {
-      AddLabel2 = AddLabel
-      AddLabel3 = AddLabel
-      SubLabel2 = SubLabel
-      SubLabel3 = SubLabel
-      MulLabel2 = MulLabel
-      MulLabel3 = MulLabel
-      DivLabel2 = DivLabel
-      DivLabel3 = DivLabel
-      view.addSubview(AddLabel2)
-   }
-      
    func InitFormation() {
       
       let Wide = Size.width / 4
@@ -284,9 +272,13 @@ class ViewController: UIViewController {
    func CheckCanMove() -> Bool {
       if ExitQuestion == true || TestArray.count % 2 == 0 {
          return false
-      }else{
-         return true
       }
+      
+      if LabelArray.count == 9 {
+         return false
+      }
+      
+      return true
    }
    
    @objc func TapAdd() {
