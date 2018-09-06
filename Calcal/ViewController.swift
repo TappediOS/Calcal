@@ -103,7 +103,7 @@ class ViewController: UIViewController {
       AnswerLabel.layer.cornerRadius = 10.0
       AnswerLabel.layer.borderColor = UIColor.black.cgColor
       AnswerLabel.isUserInteractionEnabled = true
-      AnswerLabel.text = "23"
+      AnswerLabel.text = String(arc4random_uniform(10))
       view.addSubview(AnswerLabel)
       
       BackButton.frame = CGRect(x: Interval, y: Size.height * 3.5 / 4, width: Wide, height: Wide)
@@ -123,6 +123,7 @@ class ViewController: UIViewController {
       
       let Wide = Size.width / 5
       let Interval = Size.width / 25
+      let Number: String = String(arc4random_uniform(10))
 
       SetLabel.frame = CGRect(x: Interval * CGFloat(Num) + Wide * CGFloat(Num - 1), y: Size.height * 2 / 4, width: Wide, height: Wide)
       SetLabel.font = UIFont(name: "Helvetica", size: 30)
@@ -138,13 +139,13 @@ class ViewController: UIViewController {
       SetLabel.tag = Num
       switch Num {
       case 1:
-         SetLabel.text = "43"
+         SetLabel.text = Number
       case 2:
-         SetLabel.text = "4"
+         SetLabel.text = Number
       case 3:
-         SetLabel.text = "7"
+         SetLabel.text = Number
       case 4:
-         SetLabel.text = "10"
+         SetLabel.text = Number
       default:
          print("error")
       }
@@ -206,7 +207,7 @@ class ViewController: UIViewController {
       SetLabel.layer.cornerRadius = 10.0
       SetLabel.layer.borderColor = UIColor.black.cgColor
       SetLabel.isUserInteractionEnabled = true
-      SetLabel.tag = Num
+      SetLabel.tag = (Num + 10)
       switch Num {
       case 1:
          SetLabel.text = "+"
@@ -339,8 +340,18 @@ class ViewController: UIViewController {
       case 4:
          Ffourth = false
       default:
-         print("Num is not 1 ... 4")
+         break
       }
+   }
+   
+   func NumbreOrCla(_ Num: Int) -> Bool {
+      
+      if Num < 10 {
+         return false
+      }else{
+         return true
+      }
+      
    }
    
    @objc func FormationOneBackLabel() {
@@ -353,32 +364,44 @@ class ViewController: UIViewController {
       let FrontOfEqurl = SerchEqurl! - 1
       
       let Target: UILabel = TestArray[FrontOfEqurl]
-      let Count = CGFloat(TestArray[FrontOfEqurl].tag)
+      var Count = CGFloat(TestArray[FrontOfEqurl].tag)
       let Wide = Size.width / 5
       let Interval = Size.width / 25
       
       ReSetBool(Num: TestArray[FrontOfEqurl].tag)
       
+      
+      //+ - * /
+      if NumbreOrCla(TestArray[FrontOfEqurl].tag) == true {
+         Count -= 10
+         UILabel.transition(with: Target, duration: 1, options: .curveEaseInOut, animations: { () -> Void in
+            Target.frame = CGRect(x: Interval * Count + Wide * (Count - 1) + Wide / 2, y: self.Size.height * 3 / 4 + Wide / 2, width: 0.1, height: 0.1)
+            
+         }, completion: { _ in
+            //self.FormationUpLabel(Target: Target)
+         })
+      }else{
+         UILabel.transition(with: Target, duration: 1, options: .curveEaseInOut, animations: { () -> Void in
+            Target.frame = CGRect(x: Interval * Count + Wide * (Count - 1), y: self.Size.height * 2 / 4, width: Wide, height: Wide)
+         }, completion: { _ in
+            //self.FormationUpLabel(Target: Target)
+         })
+      }
+      
       TestArray.remove(at: FrontOfEqurl)
       LabelArray.remove(at: FrontOfEqurl)
-      
-      UILabel.transition(with: Target, duration: 1, options: .curveEaseInOut, animations: { () -> Void in
-         Target.frame = CGRect(x: Interval * Count + Wide * (Count - 1), y: self.Size.height * 2 / 4, width: Wide, height: Wide)
-      }, completion: { _ in
-         //self.FormationUpLabel(Target: Target)
-      })
-      
+
       BackFormation()
       if FrontOfEqurl != 0{
          FrontFormation(Count: FrontOfEqurl)
       }
-         
+      
+      //？を復活させる
       if LabelArray[0] == "=" {
          ExitQuestion = true
          LabelArray.insert("?", at: 0)
          UILabel.transition(with: Target, duration: 1, options: .curveEaseInOut, animations: { () -> Void in
             self.QuestionLabel.frame = CGRect(x: self.Size.width / 16 , y: self.Size.height / 4, width: self.Size.width / 4, height: self.Size.width / 4)
-   //self.QuestionLabel.isHidden = false
          }, completion: {_ in})
          
       }
@@ -387,16 +410,19 @@ class ViewController: UIViewController {
       
    }
    
+   
+   //選択されたラベルを動的に移動させる。
    func FormationUpLabel(Target:UILabel) {
-
+      
+      //？があるかないかで場合分け
       if ExitQuestion == true {
+         //?を取り除く
          LabelArray.removeFirst()
          LabelArray.insert(Target.text!, at: 0)
          TestArray.append(Target)
          ExitQuestion = false
          UILabel.transition(with: Target, duration: 1, options: .curveEaseInOut, animations: { () -> Void in
             self.QuestionLabel.frame = CGRect(x: self.Size.width * 3 / 16 , y: self.Size.height / 4 + self.Size.width / 8, width: 0.3, height: 0.3)
-            //self.QuestionLabel.isHidden = true
          }, completion: {_ in})
 
       }else{
@@ -404,7 +430,6 @@ class ViewController: UIViewController {
          let FrontOfEqurl = SerchEqurl!
          LabelArray.insert(Target.text!, at: FrontOfEqurl)
          TestArray.append(Target)
-         print(LabelArray)
          FrontFormation(Count: FrontOfEqurl)
       }
       
@@ -424,9 +449,10 @@ class ViewController: UIViewController {
          
          
       }, completion: { _ in
-         //ここを入れると。無限ループする。
          //self.FormationUpLabel(Target: Target)
       })
+      
+      print(LabelArray)
    }
    
    
@@ -437,25 +463,28 @@ class ViewController: UIViewController {
          
          switch touched.view {
          case FirstLabel:
-            if Ffirst == false {
+            if (Ffirst == false && LabelArray.count % 2 == 0) || ExitQuestion == true {
                FormationUpLabel(Target: FirstLabel)
+               Ffirst = true
             }
-            Ffirst = true
+            
          case SecondLabel:
-            if Fsecond == false {
+            if (Fsecond == false && LabelArray.count % 2 == 0) || ExitQuestion == true {
                FormationUpLabel(Target: SecondLabel)
+               Fsecond = true
             }
-            Fsecond = true
+            
          case ThirdLabel:
-            if Fthird == false {
+            if (Fthird == false && LabelArray.count % 2 == 0) || ExitQuestion == true {
                FormationUpLabel(Target: ThirdLabel)
+               Fthird = true
             }
-            Fthird = true
+            
          case ForthLabel:
-            if Ffourth == false {
+            if (Ffourth == false && LabelArray.count % 2 == 0) || ExitQuestion == true {
                FormationUpLabel(Target: ForthLabel)
+               Ffourth = true
             }
-            Ffourth = true
          default:
             break
          }
