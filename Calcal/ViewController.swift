@@ -44,6 +44,7 @@ class ViewController: UIViewController {
    var Ffourth: Bool = false
    
    let BackButton = UIButton()
+   let ReLoadButton = UIButton()
    
    let EqualLabel = UILabel()
    let AnswerLabel = UILabel()
@@ -55,7 +56,7 @@ class ViewController: UIViewController {
    var TestArray: [UILabel] = []
    
    let Speed: Double = 0.5
-   let Answer = arc4random_uniform(10)
+   let Answer = arc4random_uniform(9) + 1
 
    override func viewDidLoad() {
       super.viewDidLoad()
@@ -135,7 +136,7 @@ class ViewController: UIViewController {
       
       let Wide = Size.width / 5
       let Interval = Size.width / 25
-      let Number: String = String(arc4random_uniform(10))
+      let Number: String = String(arc4random_uniform(9) + 1)
 
       SetLabel.frame = CGRect(x: Interval * CGFloat(Num) + Wide * CGFloat(Num - 1), y: Size.height * 2 / 4, width: Wide, height: Wide)
       SetLabel.font = UIFont(name: "Helvetica", size: 30)
