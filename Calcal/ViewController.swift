@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AudioToolbox
 
 class ViewController: UIViewController {
   
@@ -56,19 +57,22 @@ class ViewController: UIViewController {
    var TestArray: [UILabel] = []
    
    let Speed: Double = 0.5
-   let Answer = arc4random_uniform(9) + 1
+   var Answer = Int(arc4random_uniform(9) + 1)
 
    override func viewDidLoad() {
       super.viewDidLoad()
       // Do any additional setup after loading the view, typically from a nib.
       
-      view.accessibilityIgnoresInvertColors = true
+      view.accessibilityIgnoresInvertColors = false
       view.backgroundColor = UIColor.white
+      
+      Answer = Int(arc4random_uniform(9) + 1)
       
       InitArithmeticButton()
       InitNumbreLabel()
       InitFormation()
       LabelArray = ["?", "=", AnswerLabel.text] as! [String]
+      
       
    }
    
@@ -124,12 +128,30 @@ class ViewController: UIViewController {
       BackButton.setTitleColor(UIColor.black, for: .normal)
       BackButton.layer.cornerRadius = 10.0
       BackButton.layer.borderColor = UIColor.black.cgColor
+      BackButton.layer.borderColor = UIColor.black.cgColor
+      BackButton.isUserInteractionEnabled = true
       BackButton.setTitle("<-", for: .normal)
       BackButton.addTarget(self, action: #selector(ViewController.FormationOneBackLabel), for: .touchUpInside)
       view.addSubview(BackButton)
+      
+      ReLoadButton.frame = CGRect(x: Interval * 2 + Wide, y: Size.height * 3.5 / 4, width: Wide, height: Wide)
+      ReLoadButton.backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
+      ReLoadButton.setTitleColor(UIColor.black, for: .normal)
+      ReLoadButton.layer.cornerRadius = 10.0
+      ReLoadButton.layer.borderColor = UIColor.black.cgColor
+      ReLoadButton.layer.borderColor = UIColor.black.cgColor
+      ReLoadButton.isUserInteractionEnabled = true
+      ReLoadButton.setTitle("<-", for: .normal)
+      ReLoadButton.addTarget(self, action: #selector(ViewController.ReLoad), for: .touchUpInside)
+      view.addSubview(ReLoadButton)
 
       
       
+   }
+   
+   @objc func ReLoad(){
+      loadView()
+      viewDidLoad()
    }
    
    func InitEarchNumberLabel(_ SetLabel: UILabel, _ Num: Int) {
@@ -411,11 +433,17 @@ class ViewController: UIViewController {
       }
       
       if YourAnswer != Answer {
+         AudioServicesPlaySystemSound(1522);
+         AudioServicesPlaySystemSound(1520);
          return
       }
       
       if YourAnswer == Answer {
          print("\nCOMPLEATE\n")
+         AudioServicesPlaySystemSound(1523);
+         AudioServicesPlaySystemSound(1521);
+         CompEarchAnimation()
+         GameSet()
       }
    }
    
@@ -655,6 +683,33 @@ class ViewController: UIViewController {
       }
    }
    
+   
+   func CompEarchAnimation() {
+      let Count = TestArray.count - 1
+      
+      for Tmp in 0 ... Count {
+         print(TestArray[Tmp].frame)
+         
+         let Wide = TestArray[Tmp].frame.width
+         let X = TestArray[Tmp].frame.minX
+         let Y = TestArray[Tmp].frame.minY
+         
+         
+         UILabel.transition(with: TestArray[Tmp], duration: Speed / 2, options: .curveEaseInOut, animations: { () -> Void in
+            self.TestArray[Tmp].frame = CGRect(x: X , y: Y + Wide / 2, width: Wide, height: Wide)
+         }, completion: {(finished: Bool) in
+            
+            UILabel.transition(with: self.TestArray[Tmp], duration: self.Speed / 2, options: .curveEaseInOut, animations: { () -> Void in
+               self.TestArray[Tmp].frame = CGRect(x: X , y: Y, width: Wide, height: Wide)
+            }, completion: nil)
+         })
+      }
+   }
+   
+   func GameSet() {
+      print("GameSet")
+      return
+   }
    
 
    override func didReceiveMemoryWarning() {
