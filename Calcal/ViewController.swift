@@ -53,6 +53,9 @@ class ViewController: UIViewController {
    var LabelArray: [String] = []
    
    var TestArray: [UILabel] = []
+   
+   let Speed: Double = 0.5
+   let Answer = arc4random_uniform(10)
 
    override func viewDidLoad() {
       super.viewDidLoad()
@@ -112,7 +115,7 @@ class ViewController: UIViewController {
       AnswerLabel.layer.cornerRadius = 10.0
       AnswerLabel.layer.borderColor = UIColor.black.cgColor
       AnswerLabel.isUserInteractionEnabled = true
-      AnswerLabel.text = String(arc4random_uniform(10))
+      AnswerLabel.text = String(Answer)
       view.addSubview(AnswerLabel)
       
       BackButton.frame = CGRect(x: Interval, y: Size.height * 3.5 / 4, width: Wide, height: Wide)
@@ -362,6 +365,60 @@ class ViewController: UIViewController {
          break
       }
    }
+   
+   func CalCal() {
+      
+      let SerchEqurl = LabelArray.index(of: "=")
+      let FrontOfEqurl = SerchEqurl! - 1
+      
+      print("FrontFoEqurl -> \(FrontOfEqurl)")
+      
+      if FrontOfEqurl % 2 == 1 {
+         print("Dont Cal Case1")
+         return
+      }
+      
+      if FrontOfEqurl == 0 {
+         print("Dont Cal Case2")
+         return
+      }
+      
+      var YourAnswer = Int(LabelArray[0])!
+      print("\nYourAnswer = \(YourAnswer)\n")
+      
+      for Tmp in stride(from: 2, to: FrontOfEqurl + 1, by: 2) {
+         let AnsTmp = Int(LabelArray[Tmp])!
+         
+         switch LabelArray[Tmp - 1] {
+         case "+":
+            YourAnswer = YourAnswer + AnsTmp
+         case "-":
+            YourAnswer = YourAnswer - AnsTmp
+         case "*":
+            YourAnswer = YourAnswer * AnsTmp
+         case "/":
+            if AnsTmp == 0 {
+               print("Dont Cal Case3")
+               return
+            }
+            YourAnswer = YourAnswer / AnsTmp
+         default:
+            print("Dont Cal Case4")
+            return
+         }
+         print("Now Ans is \(YourAnswer)")
+      }
+      
+      if YourAnswer != Answer {
+         return
+      }
+      
+      if YourAnswer == Answer {
+         print("\nCOMPLEATE\n")
+      }
+   }
+   
+   
 
    func BackFormation() {
       
@@ -376,7 +433,7 @@ class ViewController: UIViewController {
       
       
       
-      UILabel.transition(with: EqualLabel, duration: 1, options: .curveEaseInOut, animations: { () -> Void in
+      UILabel.transition(with: EqualLabel, duration: Speed, options: .curveEaseInOut, animations: { () -> Void in
          
          //Target.frame = CGRect(x: Interval * (Count - 2) + Wide * (Count - 3), y: self.Size.height / 4, width: Wide, height: Wide)
          self.EqualLabel.frame = CGRect(x: Interval * (ArrayCount - 2) + Wide * (ArrayCount - 3), y: self.Size.height / 4, width: Wide, height: Wide)
@@ -399,7 +456,7 @@ class ViewController: UIViewController {
       ArrayCount = CGFloat(LabelArray.count)
       
       for Tmp in 0 ... (Count - 1) {
-         UILabel.transition(with: TestArray[Tmp], duration: 1, options: .curveEaseInOut, animations: { () -> Void in
+         UILabel.transition(with: TestArray[Tmp], duration: Speed, options: .curveEaseInOut, animations: { () -> Void in
             
             self.TestArray[Tmp].frame = CGRect(x: Interval * CGFloat(Tmp + 1) + Wide * CGFloat(Tmp), y: self.Size.height / 4, width: Wide, height: Wide)
          }, completion: { _ in
@@ -474,7 +531,7 @@ class ViewController: UIViewController {
       //+ - * /
       if NumbreOrCla(TestArray[FrontOfEqurl].tag) == true {
          Count -= 10
-         UILabel.transition(with: Target, duration: 1, options: .curveEaseInOut, animations: { () -> Void in
+         UILabel.transition(with: Target, duration: Speed, options: .curveEaseInOut, animations: { () -> Void in
             Target.frame = CGRect(x: Interval * Count + Wide * (Count - 1) + Wide / 2, y: self.Size.height * 3 / 4 + Wide / 2, width: 0.1, height: 0.1)
             
          }, completion: { _ in
@@ -483,7 +540,7 @@ class ViewController: UIViewController {
          
          ReFormCalCount(LabelArray[FrontOfEqurl])
       }else{
-         UILabel.transition(with: Target, duration: 1, options: .curveEaseInOut, animations: { () -> Void in
+         UILabel.transition(with: Target, duration: Speed, options: .curveEaseInOut, animations: { () -> Void in
             Target.frame = CGRect(x: Interval * Count + Wide * (Count - 1), y: self.Size.height * 2 / 4, width: Wide, height: Wide)
          }, completion: { _ in
             //self.FormationUpLabel(Target: Target)
@@ -502,7 +559,7 @@ class ViewController: UIViewController {
       if LabelArray[0] == "=" {
          ExitQuestion = true
          LabelArray.insert("?", at: 0)
-         UILabel.transition(with: Target, duration: 1, options: .curveEaseInOut, animations: { () -> Void in
+         UILabel.transition(with: Target, duration: Speed, options: .curveEaseInOut, animations: { () -> Void in
             self.QuestionLabel.frame = CGRect(x: self.Size.width / 16 , y: self.Size.height / 4, width: self.Size.width / 4, height: self.Size.width / 4)
          }, completion: {_ in})
          
@@ -524,7 +581,7 @@ class ViewController: UIViewController {
          LabelArray.insert(Target.text!, at: 0)
          TestArray.append(Target)
          ExitQuestion = false
-         UILabel.transition(with: Target, duration: 1, options: .curveEaseInOut, animations: { () -> Void in
+         UILabel.transition(with: Target, duration: Speed, options: .curveEaseInOut, animations: { () -> Void in
             self.QuestionLabel.frame = CGRect(x: self.Size.width * 3 / 16 , y: self.Size.height / 4 + self.Size.width / 8, width: 0.3, height: 0.3)
          }, completion: {_ in})
 
@@ -544,7 +601,7 @@ class ViewController: UIViewController {
       
       
       
-      UILabel.transition(with: Target, duration: 1, options: .curveEaseInOut, animations: { () -> Void in
+      UILabel.transition(with: Target, duration: Speed, options: .curveEaseInOut, animations: { () -> Void in
 
          Target.frame = CGRect(x: Interval * (Count - 2) + Wide * (Count - 3), y: self.Size.height / 4, width: Wide, height: Wide)
          self.EqualLabel.frame = CGRect(x: Interval * (Count - 1) + Wide * (Count - 2), y: self.Size.height / 4, width: Wide, height: Wide)
@@ -556,6 +613,9 @@ class ViewController: UIViewController {
       })
       
       print(LabelArray)
+      
+      //計算をする
+      CalCal()
    }
    
    
@@ -600,7 +660,4 @@ class ViewController: UIViewController {
       super.didReceiveMemoryWarning()
       // Dispose of any resources that can be recreated.
    }
-
-
 }
-
