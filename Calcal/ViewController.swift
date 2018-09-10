@@ -150,6 +150,13 @@ class ViewController: UIViewController {
    }
    
    @objc func ReLoad(){
+      if ExitQuestion == false {
+         AudioServicesPlaySystemSound(1522);
+         AudioServicesPlaySystemSound(1520);
+         return
+      }
+      AudioServicesPlaySystemSound(1522);
+      AudioServicesPlaySystemSound(1520);
       loadView()
       viewDidLoad()
    }
@@ -398,11 +405,15 @@ class ViewController: UIViewController {
       
       if FrontOfEqurl % 2 == 1 {
          print("Dont Cal Case1")
+         AudioServicesPlaySystemSound(1522);
+         AudioServicesPlaySystemSound(1520);
          return
       }
       
       if FrontOfEqurl == 0 {
          print("Dont Cal Case2")
+         AudioServicesPlaySystemSound(1522);
+         AudioServicesPlaySystemSound(1520);
          return
       }
       
@@ -440,10 +451,11 @@ class ViewController: UIViewController {
       
       if YourAnswer == Answer {
          print("\nCOMPLEATE\n")
-         AudioServicesPlaySystemSound(1523);
+         AudioServicesPlaySystemSound(1518);
          AudioServicesPlaySystemSound(1521);
-         CompEarchAnimation()
+         CompEarchAnimation(TestArray.count, TestArray.count, TestArray[0].frame.minX, TestArray[0].frame.minY, TestArray[0].frame.width)
          GameSet()
+         return
       }
    }
    
@@ -595,6 +607,9 @@ class ViewController: UIViewController {
       }
       
       print(LabelArray)
+      AudioServicesPlaySystemSound(1524);
+      AudioServicesPlaySystemSound(1520);
+      return
       
       
    }
@@ -684,26 +699,28 @@ class ViewController: UIViewController {
    }
    
    
-   func CompEarchAnimation() {
-      let Count = TestArray.count - 1
-      
-      for Tmp in 0 ... Count {
-         print(TestArray[Tmp].frame)
+   func CompEarchAnimation(_ Count: Int, _ Tmp: Int, _ X: CGFloat, _ Y: CGFloat, _ Wide: CGFloat) {
+
          
-         let Wide = TestArray[Tmp].frame.width
-         let X = TestArray[Tmp].frame.minX
-         let Y = TestArray[Tmp].frame.minY
-         
-         
-         UILabel.transition(with: TestArray[Tmp], duration: Speed / 2, options: .curveEaseInOut, animations: { () -> Void in
-            self.TestArray[Tmp].frame = CGRect(x: X , y: Y + Wide / 2, width: Wide, height: Wide)
+      UILabel.transition(with: self.TestArray[Count - Tmp], duration: self.Speed / 2, options: .curveEaseInOut, animations: { () -> Void in
+         self.TestArray[Count - Tmp].frame = CGRect(x: X , y: Y + Wide / 2, width: Wide, height: Wide)
+      }, completion: {(finished: Bool) in
+               
+         UILabel.transition(with: self.TestArray[Count - Tmp], duration: self.Speed / 2, options: .curveEaseInOut, animations: { () -> Void in
+            self.TestArray[Count - Tmp].frame = CGRect(x: X , y: Y, width: Wide, height: Wide)
          }, completion: {(finished: Bool) in
+            print("Tmp = \(Tmp)")
+            if Tmp == 1 {
+               return
+            }
+            self.CompEarchAnimation(Count, Tmp - 1, self.TestArray[Count - Tmp + 1].frame.minX, Y, Wide)
             
-            UILabel.transition(with: self.TestArray[Tmp], duration: self.Speed / 2, options: .curveEaseInOut, animations: { () -> Void in
-               self.TestArray[Tmp].frame = CGRect(x: X , y: Y, width: Wide, height: Wide)
-            }, completion: nil)
+                  
          })
-      }
+      })
+
+      
+      
    }
    
    func GameSet() {
