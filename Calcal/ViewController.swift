@@ -56,6 +56,8 @@ class ViewController: UIViewController {
    
    var TestArray: [UILabel] = []
    
+   var Num: [Int] = []
+   
    let Speed: Double = 0.5
    var Answer = Int(arc4random_uniform(9) + 1)
 
@@ -68,12 +70,38 @@ class ViewController: UIViewController {
       
       Answer = Int(arc4random_uniform(9) + 1)
       
+      InitNumber()
       InitArithmeticButton()
       InitNumbreLabel()
       InitFormation()
       LabelArray = ["?", "=", AnswerLabel.text] as! [String]
       
       
+   }
+   
+   func InitNumber() {
+      
+      while true {
+         Num.append(Int(arc4random_uniform(9) + 1))
+         Num.append(Int(arc4random_uniform(9) + 1))
+         Num.append(Int(arc4random_uniform(9) + 1))
+         Num.append(Int(arc4random_uniform(9) + 1))
+         
+         if Num[0] == Num[1] || Num[0] == Num[2] || Num[0] == Num[3] {
+            Num.removeAll()
+            continue
+         }
+         if Num[1] == Num[2] || Num[1] == Num[3] {
+            Num.removeAll()
+            continue
+         }
+         if Num[2] == Num[3] {
+            Num.removeAll()
+            continue
+         }
+         break
+      }
+      print(Num)
    }
    
    func InitFormation() {
@@ -453,6 +481,7 @@ class ViewController: UIViewController {
          print("\nCOMPLEATE\n")
          AudioServicesPlaySystemSound(1518);
          AudioServicesPlaySystemSound(1521);
+         BackButton.isEnabled = false
          CompEarchAnimation(TestArray.count, TestArray.count, TestArray[0].frame.minX, TestArray[0].frame.minY, TestArray[0].frame.width)
          GameSet()
          return
@@ -702,15 +731,16 @@ class ViewController: UIViewController {
    func CompEarchAnimation(_ Count: Int, _ Tmp: Int, _ X: CGFloat, _ Y: CGFloat, _ Wide: CGFloat) {
 
          
-      UILabel.transition(with: self.TestArray[Count - Tmp], duration: self.Speed / 2, options: .curveEaseInOut, animations: { () -> Void in
-         self.TestArray[Count - Tmp].frame = CGRect(x: X , y: Y + Wide / 2, width: Wide, height: Wide)
+      UILabel.transition(with: self.TestArray[Count - Tmp], duration: self.Speed / 4, options: .curveEaseInOut, animations: { () -> Void in
+         self.TestArray[Count - Tmp].frame = CGRect(x: X , y: Y - Wide / 2, width: Wide, height: Wide)
       }, completion: {(finished: Bool) in
                
-         UILabel.transition(with: self.TestArray[Count - Tmp], duration: self.Speed / 2, options: .curveEaseInOut, animations: { () -> Void in
+         UILabel.transition(with: self.TestArray[Count - Tmp], duration: self.Speed / 4, options: .curveEaseInOut, animations: { () -> Void in
             self.TestArray[Count - Tmp].frame = CGRect(x: X , y: Y, width: Wide, height: Wide)
          }, completion: {(finished: Bool) in
             print("Tmp = \(Tmp)")
             if Tmp == 1 {
+               self.BackButton.isEnabled = true
                return
             }
             self.CompEarchAnimation(Count, Tmp - 1, self.TestArray[Count - Tmp + 1].frame.minX, Y, Wide)
