@@ -82,6 +82,7 @@ class ViewController: UIViewController {
    func InitNumber() {
       
       while true {
+         Num.removeAll()
          Num.append(Int(arc4random_uniform(9) + 1))
          Num.append(Int(arc4random_uniform(9) + 1))
          Num.append(Int(arc4random_uniform(9) + 1))
@@ -189,13 +190,12 @@ class ViewController: UIViewController {
       viewDidLoad()
    }
    
-   func InitEarchNumberLabel(_ SetLabel: UILabel, _ Num: Int) {
+   func InitEarchNumberLabel(_ SetLabel: UILabel, _ Number: Int) {
       
       let Wide = Size.width / 5
       let Interval = Size.width / 25
-      let Number: String = String(arc4random_uniform(9) + 1)
 
-      SetLabel.frame = CGRect(x: Interval * CGFloat(Num) + Wide * CGFloat(Num - 1), y: Size.height * 2 / 4, width: Wide, height: Wide)
+      SetLabel.frame = CGRect(x: Interval * CGFloat(Number) + Wide * CGFloat(Number - 1), y: Size.height * 2 / 4, width: Wide, height: Wide)
       SetLabel.font = UIFont(name: "Helvetica", size: 30)
       SetLabel.layer.borderColor = UIColor.black.cgColor
       SetLabel.layer.borderWidth = 2
@@ -206,19 +206,8 @@ class ViewController: UIViewController {
       SetLabel.layer.cornerRadius = 10.0
       SetLabel.layer.borderColor = UIColor.black.cgColor
       SetLabel.isUserInteractionEnabled = true
-      SetLabel.tag = Num
-      switch Num {
-      case 1:
-         SetLabel.text = Number
-      case 2:
-         SetLabel.text = Number
-      case 3:
-         SetLabel.text = Number
-      case 4:
-         SetLabel.text = Number
-      default:
-         print("error")
-      }
+      SetLabel.tag = Number
+      SetLabel.text = String(Num[Number - 1])
       view.addSubview(SetLabel)
       return
    }
