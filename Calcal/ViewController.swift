@@ -79,6 +79,126 @@ class ViewController: UIViewController {
       
    }
    
+   func SetOkNum() -> Bool {
+      
+      for z in 1 ... 4 {
+         for x in 0 ... 3 {
+            for y in 0 ... 3 {
+               if x == y {
+                  continue
+               }
+               switch z {
+               case 1:
+                  if Num[x] + Num[y] == Answer {
+                     print("Num[\(x)](\(Num[x])) + Num[\(y)](\(Num[y])) is OK")
+                  }
+               case 2:
+                  if Num[x] - Num[y] == Answer {
+                     print("Num[\(x)](\(Num[x])) - Num[\(y)](\(Num[y])) is OK")
+                  }
+               case 3:
+                  if Num[x] * Num[y] == Answer {
+                     print("Num[\(x)](\(Num[x])) * Num[\(y)](\(Num[y])) is OK")
+                  }
+               case 4:
+                  if Num[x] / Num[y] == Answer {
+                     print("Num[\(x)](\(Num[x])) / Num[\(y)](\(Num[y])) is OK")
+                  }
+               default:
+                  print("z error")
+                  break
+               }
+            }
+         }
+      }
+      
+      for w in 1 ... 16 {
+         for x in 0 ... 3 {
+            for y in 0 ... 3 {
+               for z in 0 ... 3 {
+                  if x == y || x == z || y == z {
+                     continue
+                  }
+                  switch w {
+                  case 1:
+                     if Num[x] + Num[y] + Num[z] == Answer {
+                        print("Num[\(x)](\(Num[x])) + Num[\(y)](\(Num[y])) + Num[\(z)](\(Num[z])) is OK")
+                     }
+                  case 2:
+                     if Num[x] + Num[y] - Num[z] == Answer {
+                        print("Num[\(x)](\(Num[x])) + Num[\(y)](\(Num[y])) - Num[\(z)](\(Num[z])) is OK")
+                     }
+                  case 3:
+                     if Num[x] + Num[y] * Num[z] == Answer {
+                        print("Num[\(x)](\(Num[x])) + Num[\(y)](\(Num[y])) * Num[\(z)](\(Num[z])) is OK")
+                     }
+                  case 4:
+                     if Num[x] + Num[y] / Num[z] == Answer {
+                        print("Num[\(x)](\(Num[x])) + Num[\(y)](\(Num[y])) / Num[\(z)](\(Num[z])) is OK")
+                     }
+                  case 5:
+                     if Num[x] - Num[y] + Num[z] == Answer {
+                        print("Num[\(x)](\(Num[x])) - Num[\(y)](\(Num[y])) + Num[\(z)](\(Num[z])) is OK")
+                     }
+                  case 6:
+                     if Num[x] - Num[y] - Num[z] == Answer {
+                        print("Num[\(x)](\(Num[x])) - Num[\(y)](\(Num[y])) - Num[\(z)](\(Num[z])) is OK")
+                     }
+                  case 7:
+                     if Num[x] - Num[y] * Num[z] == Answer {
+                        print("Num[\(x)](\(Num[x])) - Num[\(y)](\(Num[y])) * Num[\(z)](\(Num[z])) is OK")
+                     }
+                  case 8:
+                     if Num[x] - Num[y] / Num[z] == Answer {
+                        print("Num[\(x)](\(Num[x])) - Num[\(y)](\(Num[y])) / Num[\(z)](\(Num[z])) is OK")
+                     }
+                  case 9:
+                     if Num[x] * Num[y] + Num[z] == Answer {
+                        print("Num[\(x)](\(Num[x])) * Num[\(y)](\(Num[y])) + Num[\(z)](\(Num[z])) is OK")
+                     }
+                  case 10:
+                     if Num[x] * Num[y] - Num[z] == Answer {
+                        print("Num[\(x)](\(Num[x])) * Num[\(y)](\(Num[y])) - Num[\(z)](\(Num[z])) is OK")
+                     }
+                  case 11:
+                     if Num[x] * Num[y] * Num[z] == Answer {
+                        print("Num[\(x)](\(Num[x])) * Num[\(y)](\(Num[y])) * Num[\(z)](\(Num[z])) is OK")
+                     }
+                  case 12:
+                     if Num[x] * Num[y] / Num[z] == Answer {
+                        print("Num[\(x)](\(Num[x])) * Num[\(y)](\(Num[y])) / Num[\(z)](\(Num[z])) is OK")
+                     }
+                  case 13:
+                     if Num[x] / Num[y] + Num[z] == Answer {
+                        print("Num[\(x)](\(Num[x])) / Num[\(y)](\(Num[y])) + Num[\(z)](\(Num[z])) is OK")
+                     }
+                  case 14:
+                     if Num[x] / Num[y] - Num[z] == Answer {
+                        print("Num[\(x)](\(Num[x])) / Num[\(y)](\(Num[y])) - Num[\(z)](\(Num[z])) is OK")
+                     }
+                  case 15:
+                     if Num[x] / Num[y] * Num[z] == Answer {
+                        print("Num[\(x)](\(Num[x])) / Num[\(y)](\(Num[y])) * Num[\(z)](\(Num[z])) is OK")
+                     }
+                  case 16:
+                     if Num[x] / Num[y] / Num[z] == Answer {
+                        print("Num[\(x)](\(Num[x])) / Num[\(y)](\(Num[y])) / Num[\(z)](\(Num[z])) is OK")
+                     }
+                  default:
+                     print("w error")
+                     break;
+                     
+                  }
+               }
+            }
+         }
+      }
+      
+
+      
+      return false
+   }
+   
    func InitNumber() {
       
       while true {
@@ -88,21 +208,25 @@ class ViewController: UIViewController {
          Num.append(Int(arc4random_uniform(9) + 1))
          Num.append(Int(arc4random_uniform(9) + 1))
          
-         if Num[0] == Num[1] || Num[0] == Num[2] || Num[0] == Num[3] {
+         if Num[0] == Num[1] || Num[0] == Num[2] || Num[0] == Num[3] || Num[0] == Answer {
             Num.removeAll()
             continue
          }
-         if Num[1] == Num[2] || Num[1] == Num[3] {
+         if Num[1] == Num[2] || Num[1] == Num[3] || Num[1] == Answer {
             Num.removeAll()
             continue
          }
-         if Num[2] == Num[3] {
+         if Num[2] == Num[3] || Num[2] == Answer || Num[3] == Answer {
             Num.removeAll()
             continue
          }
+         print("Answer = \(Answer)")
+         print(Num)
+         SetOkNum()
+         
+         
          break
       }
-      print(Num)
    }
    
    func InitFormation() {
@@ -471,8 +595,10 @@ class ViewController: UIViewController {
          AudioServicesPlaySystemSound(1518);
          AudioServicesPlaySystemSound(1521);
          BackButton.isEnabled = false
-         CompEarchAnimation(TestArray.count, TestArray.count, TestArray[0].frame.minX, TestArray[0].frame.minY, TestArray[0].frame.width)
-         GameSet()
+         DispatchQueue.main.asyncAfter(deadline: .now() + Speed / 3){
+            self.CompEarchAnimation(self.TestArray.count, self.TestArray.count, self.TestArray[0].frame.minX, self.TestArray[0].frame.minY, self.TestArray[0].frame.width)
+            self.GameSet()
+         }
          return
       }
    }
