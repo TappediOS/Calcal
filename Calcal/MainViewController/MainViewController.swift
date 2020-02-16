@@ -80,108 +80,7 @@ class MainViewController: UIViewController {
    
    
    
-   func InitNumber() {
-      
-      while true {
-         Num.removeAll()
-         Num.append(Int(arc4random_uniform(9) + 1))
-         Num.append(Int(arc4random_uniform(9) + 1))
-         Num.append(Int(arc4random_uniform(9) + 1))
-         Num.append(Int(arc4random_uniform(9) + 1))
-         
-         if Num[0] == Num[1] || Num[0] == Num[2] || Num[0] == Num[3] || Num[0] == Answer {
-            Num.removeAll()
-            continue
-         }
-         if Num[1] == Num[2] || Num[1] == Num[3] || Num[1] == Answer {
-            Num.removeAll()
-            continue
-         }
-         if Num[2] == Num[3] || Num[2] == Answer || Num[3] == Answer {
-            Num.removeAll()
-            continue
-         }
-         print("Answer = \(Answer)")
-         print(Num)
-         isCalRight()
-         
-         
-         break
-      }
-   }
    
-   func InitFormation() {
-      
-      let Wide = Size.width / 4
-      let Interval = Size.width / 16
-      
-      QuestionLabel.frame = CGRect(x: Interval , y: Size.height / 4, width: Wide, height: Wide)
-      QuestionLabel.font = UIFont(name: "Helvetica", size: 30)
-      QuestionLabel.layer.borderColor = UIColor.black.cgColor
-      QuestionLabel.layer.borderWidth = 2
-      QuestionLabel.layer.masksToBounds = true
-      QuestionLabel.layer.cornerRadius = 10
-      QuestionLabel.textAlignment = NSTextAlignment.center
-      QuestionLabel.backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
-      QuestionLabel.layer.cornerRadius = 10.0
-      QuestionLabel.layer.borderColor = UIColor.black.cgColor
-      QuestionLabel.isUserInteractionEnabled = true
-      QuestionLabel.text = "?"
-      view.addSubview(QuestionLabel)
-      
-      EqualLabel.frame = CGRect(x: Interval * 2 + Wide, y: Size.height / 4, width: Wide, height: Wide)
-      EqualLabel.font = UIFont(name: "Helvetica", size: 30)
-      EqualLabel.layer.borderColor = UIColor.black.cgColor
-      EqualLabel.layer.borderWidth = 2
-      EqualLabel.layer.masksToBounds = true
-      EqualLabel.layer.cornerRadius = 10
-      EqualLabel.textAlignment = NSTextAlignment.center
-      EqualLabel.backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
-      EqualLabel.layer.cornerRadius = 10.0
-      EqualLabel.layer.borderColor = UIColor.black.cgColor
-      EqualLabel.isUserInteractionEnabled = true
-      EqualLabel.text = "="
-      view.addSubview(EqualLabel)
-      
-      AnswerLabel.frame = CGRect(x: Interval * 3 + Wide * 2, y: Size.height / 4, width: Wide, height: Wide)
-      AnswerLabel.font = UIFont(name: "Helvetica", size: 30)
-      AnswerLabel.layer.borderColor = UIColor.black.cgColor
-      AnswerLabel.layer.borderWidth = 2
-      AnswerLabel.layer.masksToBounds = true
-      AnswerLabel.layer.cornerRadius = 10
-      AnswerLabel.textAlignment = NSTextAlignment.center
-      AnswerLabel.backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
-      AnswerLabel.layer.cornerRadius = 10.0
-      AnswerLabel.layer.borderColor = UIColor.black.cgColor
-      AnswerLabel.isUserInteractionEnabled = true
-      AnswerLabel.text = String(Answer)
-      view.addSubview(AnswerLabel)
-      
-      BackButton.frame = CGRect(x: Interval, y: Size.height * 3.5 / 4, width: Wide, height: Wide)
-      BackButton.backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
-      BackButton.setTitleColor(UIColor.black, for: .normal)
-      BackButton.layer.cornerRadius = 10.0
-      BackButton.layer.borderColor = UIColor.black.cgColor
-      BackButton.layer.borderColor = UIColor.black.cgColor
-      BackButton.isUserInteractionEnabled = true
-      BackButton.setTitle("<-", for: .normal)
-      BackButton.addTarget(self, action: #selector(self.FormationOneBackLabel), for: .touchUpInside)
-      view.addSubview(BackButton)
-      
-      ReLoadButton.frame = CGRect(x: Interval * 2 + Wide, y: Size.height * 3.5 / 4, width: Wide, height: Wide)
-      ReLoadButton.backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
-      ReLoadButton.setTitleColor(UIColor.black, for: .normal)
-      ReLoadButton.layer.cornerRadius = 10.0
-      ReLoadButton.layer.borderColor = UIColor.black.cgColor
-      ReLoadButton.layer.borderColor = UIColor.black.cgColor
-      ReLoadButton.isUserInteractionEnabled = true
-      ReLoadButton.setTitle("<-", for: .normal)
-      ReLoadButton.addTarget(self, action: #selector(self.ReLoad), for: .touchUpInside)
-      view.addSubview(ReLoadButton)
-
-      
-      
-   }
    
    @objc func ReLoad(){
       if ExitQuestion == false {
@@ -195,34 +94,7 @@ class MainViewController: UIViewController {
       viewDidLoad()
    }
    
-   func InitEarchNumberLabel(_ SetLabel: UILabel, _ Number: Int) {
-      
-      let Wide = Size.width / 5
-      let Interval = Size.width / 25
-
-      SetLabel.frame = CGRect(x: Interval * CGFloat(Number) + Wide * CGFloat(Number - 1), y: Size.height * 2 / 4, width: Wide, height: Wide)
-      SetLabel.font = UIFont(name: "Helvetica", size: 30)
-      SetLabel.layer.borderColor = UIColor.black.cgColor
-      SetLabel.layer.borderWidth = 2
-      SetLabel.layer.masksToBounds = true
-      SetLabel.layer.cornerRadius = 10
-      SetLabel.textAlignment = NSTextAlignment.center
-      SetLabel.backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
-      SetLabel.layer.cornerRadius = 10.0
-      SetLabel.layer.borderColor = UIColor.black.cgColor
-      SetLabel.isUserInteractionEnabled = true
-      SetLabel.tag = Number
-      SetLabel.text = String(Num[Number - 1])
-      view.addSubview(SetLabel)
-      return
-   }
    
-   func InitNumbreLabel() {
-      InitEarchNumberLabel(FirstLabel, 1)
-      InitEarchNumberLabel(SecondLabel, 2)
-      InitEarchNumberLabel(ThirdLabel, 3)
-      InitEarchNumberLabel(ForthLabel, 4)
-   }
    
    func InitEarchButton(_ SetButton: UIButton, _ Num: Int){
       
