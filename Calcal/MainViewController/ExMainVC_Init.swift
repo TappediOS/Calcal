@@ -176,15 +176,15 @@ extension MainViewController {
       SetLabel.tag = (Num + 10)
       switch Num {
       case 1:
-      SetLabel.text = "+"
+         SetLabel.text = "+"
       case 2:
-      SetLabel.text = "-"
+         SetLabel.text = "-"
       case 3:
-      SetLabel.text = "×"
+         SetLabel.text = "×"
       case 4:
-      SetLabel.text = "÷"
+         SetLabel.text = "÷"
       default:
-      print("error")
+         print("error")
       }
       SetLabel.isHidden = true
       view.addSubview(SetLabel)
