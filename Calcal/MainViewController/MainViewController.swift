@@ -63,7 +63,6 @@ class MainViewController: UIViewController {
 
    override func viewDidLoad() {
       super.viewDidLoad()
-      
       view.accessibilityIgnoresInvertColors = false
       view.backgroundColor = UIColor.white
       
@@ -74,8 +73,6 @@ class MainViewController: UIViewController {
       InitNumbreLabel()
       InitFormation()
       LabelArray = ["?", "=", AnswerLabel.text] as! [String]
-      
-      
    }
    
 
@@ -91,33 +88,20 @@ class MainViewController: UIViewController {
       viewDidLoad()
    }
    
-   
-   
-   
-   
    func MoveCal(_ TargetLabel: UILabel) {
       TargetLabel.isHidden = false
       FormationUpLabel(Target: TargetLabel)
    }
    
    func CheckCanMove() -> Bool {
-      if ExitQuestion == true || TestArray.count % 2 == 0 {
-         return false
-      }
-      
-      if LabelArray.count == 9 {
-         return false
-      }
-      
+      if ExitQuestion == true || TestArray.count % 2 == 0 { return false }
+      if LabelArray.count == 9 { return false }
       return true
    }
    
    @objc func TapAdd() {
-      if CheckCanMove() == false {
-         return
-      }
+      guard CheckCanMove() == true else { return }
       AddCount += 1
-      Add.backgroundColor = UIColor.cyan
       DispatchQueue.main.asyncAfter(deadline: .now() + 0.13) {
          self.Add.backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
       }
@@ -133,12 +117,11 @@ class MainViewController: UIViewController {
          break
       }
    }
+   
    @objc func TapSub() {
-      if CheckCanMove() == false {
-         return
-      }
+      guard CheckCanMove() == true else { return }
+      
       SubCount += 1
-      Sub.backgroundColor = UIColor.cyan
       DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
          self.Sub.backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
       }
@@ -153,12 +136,12 @@ class MainViewController: UIViewController {
          break
       }
    }
+   
    @objc func TapMul() {
       if CheckCanMove() == false {
          return
       }
       MulCount += 1
-      Mul.backgroundColor = UIColor.cyan
       DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
          self.Mul.backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
       }
@@ -173,12 +156,12 @@ class MainViewController: UIViewController {
          break
       }
    }
+   
    @objc func TapDiv() {
       if CheckCanMove() == false {
          return
       }
       DivCount += 1
-      Div.backgroundColor = UIColor.cyan
       DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
          self.Div.backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
       }
@@ -195,7 +178,6 @@ class MainViewController: UIViewController {
    }
    
    func CalCal() {
-      
       let SerchEqurl = LabelArray.index(of: "=")
       let FrontOfEqurl = SerchEqurl! - 1
       
@@ -263,17 +245,11 @@ class MainViewController: UIViewController {
    
 
    func BackFormation() {
-      
       let ArrayCount = CGFloat(LabelArray.count + 1)
-      
-      if ArrayCount == 3 {
-         return
-      }
+      if ArrayCount == 3 { return }
       
       let Wide = Size.width / ArrayCount
       let Interval = Size.width / (ArrayCount * ArrayCount)
-      
-      
       
       UILabel.transition(with: EqualLabel, duration: Speed, options: .curveEaseInOut, animations: { () -> Void in
          
@@ -283,8 +259,7 @@ class MainViewController: UIViewController {
          
          
       }, completion: { _ in
-         //ここを入れると。無限ループする。
-         //self.FormationUpLabel(Target: Target)
+         
       })
       
       
@@ -302,15 +277,13 @@ class MainViewController: UIViewController {
             
             self.TestArray[Tmp].frame = CGRect(x: Interval * CGFloat(Tmp + 1) + Wide * CGFloat(Tmp), y: self.Size.height / 4, width: Wide, height: Wide)
          }, completion: { _ in
-            //ここを入れると。無限ループする。
-            //self.FormationUpLabel(Target: Target)
+            print("進むアニメーションの完了")
          })
       }
       
    }
    
    func ReSetBool(Num: Int){
-      
       switch Num {
       case 1:
          Ffirst = false
@@ -326,7 +299,6 @@ class MainViewController: UIViewController {
    }
    
    func ReFormCalCount(_ Check: String) {
-      
       switch Check {
       case "+":
          AddCount -= 1
@@ -344,20 +316,12 @@ class MainViewController: UIViewController {
    
    
    func NumbreOrCla(_ Num: Int) -> Bool {
-      
-      if Num < 10 {
-         return false
-      }else{
-         return true
-      }
-      
+      if Num < 10 { return false }
+      return true
    }
    
    @objc func FormationOneBackLabel() {
-      
-      if ExitQuestion == true {
-         return
-      }
+      guard ExitQuestion == false else { return }
       
       let SerchEqurl = LabelArray.index(of: "=")
       let FrontOfEqurl = SerchEqurl! - 1
@@ -368,7 +332,6 @@ class MainViewController: UIViewController {
       let Interval = Size.width / 25
       
       ReSetBool(Num: TestArray[FrontOfEqurl].tag)
-      
       
       //+ - * /
       if NumbreOrCla(TestArray[FrontOfEqurl].tag) == true {
@@ -410,15 +373,11 @@ class MainViewController: UIViewController {
       print(LabelArray)
       AudioServicesPlaySystemSound(1524);
       AudioServicesPlaySystemSound(1520);
-      return
-      
-      
    }
    
    
    //選択されたラベルを動的に移動させる。
    func FormationUpLabel(Target:UILabel) {
-      
       //？があるかないかで場合分け
       if ExitQuestion == true {
          //?を取り除く
@@ -444,15 +403,10 @@ class MainViewController: UIViewController {
       
       let Count = CGFloat(LabelArray.count)
       
-      
-      
       UILabel.transition(with: Target, duration: Speed, options: .curveEaseInOut, animations: { () -> Void in
-
          Target.frame = CGRect(x: Interval * (Count - 2) + Wide * (Count - 3), y: self.Size.height / 4, width: Wide, height: Wide)
          self.EqualLabel.frame = CGRect(x: Interval * (Count - 1) + Wide * (Count - 2), y: self.Size.height / 4, width: Wide, height: Wide)
          self.AnswerLabel.frame = CGRect(x: Interval * Count + Wide * (Count - 1), y: self.Size.height / 4, width: Wide, height: Wide)
-         
-         
       }, completion: { _ in
          //self.FormationUpLabel(Target: Target)
       })
@@ -465,7 +419,6 @@ class MainViewController: UIViewController {
    
    
    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-      
       for touch: AnyObject in touches {
          let touched: UITouch = touch as! UITouch
          
@@ -501,8 +454,6 @@ class MainViewController: UIViewController {
    
    
    func CompEarchAnimation(_ Count: Int, _ Tmp: Int, _ X: CGFloat, _ Y: CGFloat, _ Wide: CGFloat) {
-
-         
       UILabel.transition(with: self.TestArray[Count - Tmp], duration: self.Speed / 4, options: .curveEaseInOut, animations: { () -> Void in
          self.TestArray[Count - Tmp].frame = CGRect(x: X , y: Y - Wide / 2, width: Wide, height: Wide)
       }, completion: {(finished: Bool) in
@@ -516,13 +467,8 @@ class MainViewController: UIViewController {
                return
             }
             self.CompEarchAnimation(Count, Tmp - 1, self.TestArray[Count - Tmp + 1].frame.minX, Y, Wide)
-            
-                  
          })
       })
-
-      
-      
    }
    
    func GameSet() {

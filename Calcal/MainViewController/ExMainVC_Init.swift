@@ -58,6 +58,7 @@ extension MainViewController {
       button.layer.borderColor = UIColor.black.cgColor
       button.layer.borderColor = UIColor.black.cgColor
       button.isUserInteractionEnabled = true
+      view.addSubview(button)
    }
    
    //一番上のラベルを初期化する
