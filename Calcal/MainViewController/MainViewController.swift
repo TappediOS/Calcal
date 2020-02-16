@@ -9,7 +9,7 @@
 import UIKit
 import AudioToolbox
 
-class ViewController: UIViewController {
+class MainViewController: UIViewController {
   
    let Size: CGSize = UIScreen.main.bounds.size
    let Add = UIButton()
@@ -284,7 +284,7 @@ class ViewController: UIViewController {
       BackButton.layer.borderColor = UIColor.black.cgColor
       BackButton.isUserInteractionEnabled = true
       BackButton.setTitle("<-", for: .normal)
-      BackButton.addTarget(self, action: #selector(ViewController.FormationOneBackLabel), for: .touchUpInside)
+      BackButton.addTarget(self, action: #selector(self.FormationOneBackLabel), for: .touchUpInside)
       view.addSubview(BackButton)
       
       ReLoadButton.frame = CGRect(x: Interval * 2 + Wide, y: Size.height * 3.5 / 4, width: Wide, height: Wide)
@@ -295,7 +295,7 @@ class ViewController: UIViewController {
       ReLoadButton.layer.borderColor = UIColor.black.cgColor
       ReLoadButton.isUserInteractionEnabled = true
       ReLoadButton.setTitle("<-", for: .normal)
-      ReLoadButton.addTarget(self, action: #selector(ViewController.ReLoad), for: .touchUpInside)
+      ReLoadButton.addTarget(self, action: #selector(self.ReLoad), for: .touchUpInside)
       view.addSubview(ReLoadButton)
 
       
@@ -364,16 +364,16 @@ class ViewController: UIViewController {
       switch Num {
       case 1:
          SetButton.setTitle("+", for: .normal)
-         SetButton.addTarget(self, action: #selector(ViewController.TapAdd), for: .touchUpInside)
+         SetButton.addTarget(self, action: #selector(self.TapAdd), for: .touchUpInside)
       case 2:
          SetButton.setTitle("-", for: .normal)
-         SetButton.addTarget(self, action: #selector(ViewController.TapSub), for: .touchUpInside)
+         SetButton.addTarget(self, action: #selector(self.TapSub), for: .touchUpInside)
       case 3:
          SetButton.setTitle("*", for: .normal)
-         SetButton.addTarget(self, action: #selector(ViewController.TapMul), for: .touchUpInside)
+         SetButton.addTarget(self, action: #selector(self.TapMul), for: .touchUpInside)
       case 4:
          SetButton.setTitle("/", for: .normal)
-         SetButton.addTarget(self, action: #selector(ViewController.TapDiv), for: .touchUpInside)
+         SetButton.addTarget(self, action: #selector(self.TapDiv), for: .touchUpInside)
       default:
          print("err")
       }
