@@ -406,9 +406,9 @@ class ViewController: UIViewController {
       case 2:
       SetLabel.text = "-"
       case 3:
-      SetLabel.text = "*"
+      SetLabel.text = "×"
       case 4:
-      SetLabel.text = "/"
+      SetLabel.text = "÷"
       default:
       print("error")
       }
